@@ -1,4 +1,4 @@
-# Use the official PHP image with PHP 7.4 and Apache
+# Use the official PHP image with PHP 8.1 and Apache
 FROM php:8.1-apache
 
 # Update package repository and install system dependencies
@@ -9,11 +9,23 @@ RUN apt-get update && apt-get install -y \
     git \
     unzip \
     zlib1g-dev \
-    libzip-dev
+    libzip-dev \
+    libcurl4-openssl-dev \
+    pkg-config \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql mysqli zip \
     && docker-php-ext-enable mysqli
+
+# Install and enable the raphf extension (required by pecl_http)
+RUN pecl install raphf \
+    && docker-php-ext-enable raphf
+
+# Install and enable the pecl_http extension
+RUN pecl install pecl_http \
+    && docker-php-ext-enable http
 
 # Install Imagick extension via PECL
 RUN pecl install imagick \
@@ -32,6 +44,14 @@ COPY . /var/www/html
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-
 # Set the working directory
 WORKDIR /var/www/html
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html
+
+# Expose the port Apache is running on
+EXPOSE 80
+
+# Start Apache server
+CMD ["apache2-foreground"]
