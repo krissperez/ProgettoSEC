@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProvinceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +21,14 @@ class Province
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deleted_at = null;
+
+    #[ORM\OneToMany(targetEntity: Cap::class, mappedBy: 'code_provincia')]
+    private Collection $caps;
+
+    public function __construct()
+    {
+        $this->caps = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -45,6 +55,36 @@ class Province
     public function setDeletedAt(?\DateTimeInterface $deleted_at): static
     {
         $this->deleted_at = $deleted_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cap>
+     */
+    public function getCaps(): Collection
+    {
+        return $this->caps;
+    }
+
+    public function addCap(Cap $cap): static
+    {
+        if (!$this->caps->contains($cap)) {
+            $this->caps->add($cap);
+            $cap->setCodeProvincia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCap(Cap $cap): static
+    {
+        if ($this->caps->removeElement($cap)) {
+            // set the owning side to null (unless already changed)
+            if ($cap->getCodeProvincia() === $this) {
+                $cap->setCodeProvincia(null);
+            }
+        }
 
         return $this;
     }
