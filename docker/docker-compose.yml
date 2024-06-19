@@ -2,12 +2,12 @@ services:
   db:
     image: biarms/mysql
     environment:
-      - MYSQL_DATABASE=docker_dev
-      - MYSQL_USER=dev
-      - MYSQL_PASSWORD=dev
+      - MYSQL_DATABASE=sql7714738
+      - MYSQL_USER=sql7714738
+      - MYSQL_PASSWORD=S39LNbVTr8
       - MYSQL_ROOT_PASSWORD=root_psw
     ports:
-      - '3003:3306'
+      - '3306:3306'
     volumes:
       - './db/data/:/var/lib/mysql'
   php:
