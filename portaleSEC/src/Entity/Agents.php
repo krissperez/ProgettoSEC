@@ -24,9 +24,13 @@ class Agents
     #[ORM\OneToMany(targetEntity: AgentsZipCodes::class, mappedBy: 'id_agente')]
     private Collection $agentsZipCodes;
 
+    #[ORM\OneToMany(targetEntity: Clients::class, mappedBy: 'id_agente')]
+    private Collection $clients;
+
     public function __construct()
     {
         $this->agentsZipCodes = new ArrayCollection();
+        $this->clients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,6 +86,36 @@ class Agents
             // set the owning side to null (unless already changed)
             if ($agentsZipCode->getIdAgente() === $this) {
                 $agentsZipCode->setIdAgente(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Clients>
+     */
+    public function getClients(): Collection
+    {
+        return $this->clients;
+    }
+
+    public function addClient(Clients $client): static
+    {
+        if (!$this->clients->contains($client)) {
+            $this->clients->add($client);
+            $client->setIdAgente($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClient(Clients $client): static
+    {
+        if ($this->clients->removeElement($client)) {
+            // set the owning side to null (unless already changed)
+            if ($client->getIdAgente() === $this) {
+                $client->setIdAgente(null);
             }
         }
 

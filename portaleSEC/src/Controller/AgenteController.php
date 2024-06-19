@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Agents;
+use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +19,7 @@ class AgenteController extends AbstractController
     #[Route('/', name: 'home')]
     public function homepage() : Response
     {
-        $cap = $this->em->getRepository(Utenti::class)->findAll();
+        $cap = $this->em->getRepository(Users::class)->findAll();
 
         return $this->json($cap);
     }
