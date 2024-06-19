@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AgentiRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +24,14 @@ class Agenti
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deleted_at = null;
+
+    #[ORM\OneToMany(targetEntity: Clienti::class, mappedBy: 'id_agente', orphanRemoval: true)]
+    private Collection $clienti;
+
+    public function __construct()
+    {
+        $this->clienti = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +70,36 @@ class Agenti
     public function setDeletedAt(?\DateTimeInterface $deleted_at): static
     {
         $this->deleted_at = $deleted_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Clienti>
+     */
+    public function getClienti(): Collection
+    {
+        return $this->clienti;
+    }
+
+    public function addClienti(Clienti $clienti): static
+    {
+        if (!$this->clienti->contains($clienti)) {
+            $this->clienti->add($clienti);
+            $clienti->setIdAgente($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClienti(Clienti $clienti): static
+    {
+        if ($this->clienti->removeElement($clienti)) {
+            // set the owning side to null (unless already changed)
+            if ($clienti->getIdAgente() === $this) {
+                $clienti->setIdAgente(null);
+            }
+        }
 
         return $this;
     }
