@@ -15,10 +15,10 @@ class Utenti
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $username = null;
+    private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    private ?string $username = null;
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
@@ -31,18 +31,6 @@ class Utenti
         return $this->id;
     }
 
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): static
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -51,6 +39,18 @@ class Utenti
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): static
+    {
+        $this->username = $username;
 
         return $this;
     }

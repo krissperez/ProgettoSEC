@@ -16,9 +16,9 @@ class Cap
     #[ORM\Column(length: 255)]
     private ?string $comune = null;
 
-    #[ORM\ManyToOne(inversedBy: 'caps')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Province $code_provincia = null;
+    private ?Province $id_provincia = null;
 
     public function getId(): ?int
     {
@@ -37,14 +37,14 @@ class Cap
         return $this;
     }
 
-    public function getCodeProvincia(): ?Province
+    public function getIdProvincia(): ?Province
     {
-        return $this->code_provincia;
+        return $this->id_provincia;
     }
 
-    public function setCodeProvincia(?Province $code_provincia): static
+    public function setIdProvincia(?Province $id_provincia): static
     {
-        $this->code_provincia = $code_provincia;
+        $this->id_provincia = $id_provincia;
 
         return $this;
     }
