@@ -8,11 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AgenteController extends AbstractController
 {
-
-    #[Route('/', name: 'app_lucky_number')]
+    #[Route('/', name: 'home')]
     public function homepage() : Response
     {
-        .-
         return new Response("<h1>Ciao</h1>");
     }
 }
