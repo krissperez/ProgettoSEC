@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\AgentiCap;
+use App\Entity\AgentsZipCodes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<AgentiCap>
+ * @extends ServiceEntityRepository<AgentsZipCodes>
  *
- * @method AgentiCap|null find($id, $lockMode = null, $lockVersion = null)
- * @method AgentiCap|null findOneBy(array $criteria, array $orderBy = null)
- * @method AgentiCap[]    findAll()
- * @method AgentiCap[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method AgentsZipCodes|null find($id, $lockMode = null, $lockVersion = null)
+ * @method AgentsZipCodes|null findOneBy(array $criteria, array $orderBy = null)
+ * @method AgentsZipCodes[]    findAll()
+ * @method AgentsZipCodes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AgentiCapRepository extends ServiceEntityRepository
+class AgentsZipCodesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, AgentiCap::class);
+        parent::__construct($registry, AgentsZipCodes::class);
     }
 
 //    /**
-//     * @return AgentiCap[] Returns an array of AgentiCap objects
+//     * @return AgentsZipCodes[] Returns an array of AgentsZipCodes objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class AgentiCapRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?AgentiCap
+//    public function findOneBySomeField($value): ?AgentsZipCodes
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')
